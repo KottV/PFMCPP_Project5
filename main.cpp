@@ -32,18 +32,244 @@ Purpose:  This project continues developing Project3.
  
  */
 
+#include <iostream>
+
 /*
  copied UDT 1:
  */
+struct Cat
+{
+    int paw;
+    char colour;
+    bool gender; //0 female, 1 male
+    float age;
+    int liveNumber;
+    Cat();
+
+    void eat(char foodType);
+    void sleep (float time);
+    void mew (int count);
+};
+
+Cat::Cat()
+{
+    paw = 4;
+    colour = 'B';
+    gender = 0; //0 female, 1 male
+    age = 3.5f;
+    liveNumber = 1;
+}
+
+struct SpaceShip
+{
+    float orbitHeight{1000.f};
+    std::string engineType{"rocket"};
+    int crewNum{3};
+    int totalLoops {0};
+    std::string country{"RU"};
+    std::string name{"Salyut"};
+    SpaceShip();
+    ~SpaceShip();
+
+    struct CrewMember
+    {
+        int memberId{0};
+        std::string name{"Rob"};
+        std::string jobRole{"scientist"};
+        float weight{70.f};
+        float age{33.3f};
+
+        CrewMember();
+
+        void examineAnimal(int date, float time, Cat cat);
+        bool recordTest(int date, float time, int testNum=0);
+        void examineCrew (int date, float time, CrewMember memberId);
+    };
+
+    bool dock();
+    int makeLoop(int planetNum = 3, int loopCount = 1);
+    bool takeOf(float startTime);
+};
+
+SpaceShip::SpaceShip()
+{
+    std::cout << "Spaceship constructed." << std::endl;
+}
+SpaceShip::~SpaceShip()
+{
+    std::cout << "Spaceship deconstructed." << std::endl;
+}
+
+SpaceShip::CrewMember::CrewMember() {}
+//SpaceShip::CrewMember::~CrewMember() {}
 
 /*
  copied UDT 2:
  */
+struct Knob
+{
+    float pvalue{0.0f};
+    float cvalue{0.0f};
 
+    struct Led
+    {
+        int num = 0;
+        float brightness = 0.0f;
+
+        void set ()
+        {
+            std::cout << num << " " << brightness << std::endl;
+        }
+    };
+    
+    int roundNum(float);
+    float setValue(float, float);
+};
 /*
  copied UDT 3:
  */
 
+void SpaceShip::CrewMember::examineAnimal(int date, float time, Cat cat)
+{
+    int testNum = 0;
+    if (cat.liveNumber <= 9)
+    {
+        recordTest(date, time, ++testNum);
+    }
+
+    ++date;
+    ++time;
+}
+
+bool SpaceShip::CrewMember::recordTest(int date, float time, int testNum)
+{
+    ++date;
+    ++time;
+
+    return (testNum !=0);
+}
+
+void SpaceShip::CrewMember::examineCrew (int date, float time, CrewMember id)
+{
+    int testNum = 0;
+    if (id.weight >= 70.0f)
+    {
+        recordTest(date, time, ++testNum);
+        ++date;
+        ++time;
+    }
+}
+
+bool SpaceShip::dock()
+{
+    //SpaceShip Rassvet;
+    if (orbitHeight != 40.0f)
+    {
+        return true;
+    }
+    return false;
+}
+int SpaceShip::makeLoop(int planetNum, int loopCount)
+{
+    int loop = 0;
+    while (loop <= loopCount)
+    {
+        ++loop;
+        if (loop == planetNum)
+        {
+            std::cout << "Planet " << planetNum << " Say bye!" << std::endl;
+            return loop;
+        }
+
+    }
+    //this->totalLoops += loop;
+    return loop;
+}
+
+bool SpaceShip::takeOf(float startTime)
+{
+    //SpaceShip Rassvet;
+    ++startTime;
+    return (orbitHeight != 0.0f);
+}
+
+void Cat::eat(char foodType)
+{
+    if (foodType == 'F')
+    {
+        mew(3);
+    }
+}
+
+void Cat::sleep (float time)
+{
+    ++time;
+}
+
+void Cat::mew (int count)
+{
+//    --count;
+    for (int i=1; i <= count; ++i)
+        std::cout << "mew" << i << std::endl;
+}
+
+int Knob::roundNum(float num)
+{
+    int n = 0;
+
+    for (float i = 0.0f; i <= 20.0f; i+=0.5f)
+    {
+        if (i >= num )
+            return n / 2;
+
+        ++n;
+    }
+
+    return 0;
+}
+
+
+
+float Knob::setValue(float pval, float cval)
+{
+
+    int pvalInt = roundNum(pval);
+    int cvalInt = roundNum(cval);
+
+    Knob::Led led;
+    led.num = pvalInt;
+
+    float step = 1.0f / (cval + 1.0f);
+
+    if (pval < cval)
+    {
+        led.brightness = 0;
+
+        for (led.num = 0; led.num <= cvalInt; ++led.num)
+        {
+            led.brightness += step;
+            led.set();
+        }
+    }
+    else
+    {
+        while (led.num > cvalInt)
+        {
+            led.brightness = 0;
+            led.set();
+            --led.num;
+        }
+
+        led.brightness = (cvalInt != 0 ? 1 : 0);
+        for (led.num = cvalInt; led.num >= 0; --led.num)
+        {
+            led.set();
+            led.brightness -= step;
+        }
+    }
+
+    return cval;
+}
 /*
  new UDT 4:
  with 2 member functions
@@ -68,8 +294,10 @@ Purpose:  This project continues developing Project3.
  Wait for my code review.
  */
 
-#include <iostream>
+
 int main()
 {
+    SpaceShip proton;
+    
     std::cout << "good to go!" << std::endl;
 }
