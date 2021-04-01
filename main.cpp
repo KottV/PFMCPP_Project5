@@ -45,6 +45,7 @@ struct Cat
     float age;
     int liveNumber;
     Cat();
+    ~Cat();
 
     void eat(char foodType);
     void sleep (float time);
@@ -57,7 +58,13 @@ Cat::Cat()
     colour = 'B';
     gender = 0; //0 female, 1 male
     age = 3.5f;
-    liveNumber = 1;
+    liveNumber = 9;
+}
+
+Cat::~Cat()
+{
+    if (liveNumber > 0)
+        --liveNumber;
 }
 
 struct SpaceShip
@@ -80,6 +87,7 @@ struct SpaceShip
         float age{33.3f};
 
         CrewMember();
+        ~CrewMember();
 
         void examineAnimal(int date, float time, Cat cat);
         bool recordTest(int date, float time, int testNum=0);
@@ -95,13 +103,21 @@ SpaceShip::SpaceShip()
 {
     std::cout << "Spaceship constructed." << std::endl;
 }
+
 SpaceShip::~SpaceShip()
 {
     std::cout << "Spaceship deconstructed." << std::endl;
 }
 
-SpaceShip::CrewMember::CrewMember() {}
-//SpaceShip::CrewMember::~CrewMember() {}
+SpaceShip::CrewMember::CrewMember()
+{
+    std::cout << "CrewMember constructed." << std::endl;
+}
+
+SpaceShip::CrewMember::~CrewMember()
+{
+    std::cout << "CrewMember deconstructed." << std::endl;
+}
 
 /*
  copied UDT 2:
@@ -110,21 +126,31 @@ struct Knob
 {
     float pvalue{0.0f};
     float cvalue{0.0f};
+    Knob() {}
+    ~Knob()
+    {
+        std::cout << "Knob deconstructed" << std::endl;
+    }
 
     struct Led
     {
         int num = 0;
         float brightness = 0.0f;
-
-        void set ()
+        Led()
         {
-            std::cout << num << " " << brightness << std::endl;
+            std::cout << "Ignite the led num: " << num << " with bright: " << brightness << std::endl;
         }
+        ~Led()
+        {
+            std::cout << "Lights down" << std::endl;
+        }
+        void set ();
     };
     
     int roundNum(float);
     float setValue(float, float);
 };
+
 /*
  copied UDT 3:
  */
@@ -169,6 +195,7 @@ bool SpaceShip::dock()
     }
     return false;
 }
+
 int SpaceShip::makeLoop(int planetNum, int loopCount)
 {
     int loop = 0;
@@ -228,7 +255,10 @@ int Knob::roundNum(float num)
     return 0;
 }
 
-
+void Knob::Led::set()
+    {
+        std::cout << num << " " << brightness << std::endl;
+    }
 
 float Knob::setValue(float pval, float cval)
 {
@@ -299,5 +329,10 @@ int main()
 {
     SpaceShip proton;
     
+    Knob volume;
+                
+    volume.pvalue = volume.setValue(volume.pvalue, 10);
+    volume.pvalue = volume.setValue(volume.pvalue, 4);
+    volume.pvalue = volume.setValue(volume.pvalue, 0);
     std::cout << "good to go!" << std::endl;
 }
