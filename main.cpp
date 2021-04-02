@@ -106,7 +106,7 @@ SpaceShip::SpaceShip()
 
 SpaceShip::~SpaceShip()
 {
-    std::cout << "Spaceship deconstructed." << std::endl;
+//    std::cout << "Spaceship deconstructed." << std::endl;
 }
 
 SpaceShip::CrewMember::CrewMember()
@@ -129,7 +129,7 @@ struct Knob
     Knob() {}
     ~Knob()
     {
-        std::cout << "Knob deconstructed" << std::endl;
+//        std::cout << "Knob deconstructed" << std::endl;
     }
 
     struct Led
@@ -138,11 +138,11 @@ struct Knob
         float brightness = 0.0f;
         Led()
         {
-            std::cout << "Ignite the led num: " << num << " with bright: " << brightness << std::endl;
+//            std::cout << "Ignite the led num: " << num << " with bright: " << brightness << std::endl;
         }
         ~Led()
         {
-            std::cout << "Lights down" << std::endl;
+//            std::cout << "Lights down" << std::endl;
         }
         void set ();
     };
@@ -304,11 +304,50 @@ float Knob::setValue(float pval, float cval)
  new UDT 4:
  with 2 member functions
  */
+struct MarsLab
+{
+    SpaceShip explorer;
+    Cat matroskin;
+    MarsLab() {}
+    ~MarsLab() {}
+ 
 
+};
 /*
  new UDT 5:
  with 2 member functions
  */
+
+struct GroundControl
+{
+    SpaceShip ship;
+    Knob knob;
+    GroundControl() {}
+    ~GroundControl() {}
+
+    bool setOrbit(SpaceShip);
+    Knob adjustSignal(SpaceShip, Knob);
+};
+
+bool GroundControl::setOrbit(SpaceShip ship)
+{
+    //ship.orbitHeight = orbit;
+    std::cout << ship.orbitHeight << std::endl;
+    return 1;
+}
+
+Knob GroundControl::adjustSignal(SpaceShip ship, Knob knob)
+{
+    float threshold;
+    threshold = ship.orbitHeight / 100;
+    
+    std::cout << "orbit: " << ship.orbitHeight << " threshold: " << threshold << std::endl;
+
+    knob.pvalue = knob.setValue(knob.pvalue, threshold);
+
+    return knob;
+}
+
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
@@ -327,12 +366,27 @@ float Knob::setValue(float pval, float cval)
 
 int main()
 {
+/*
     SpaceShip proton;
     
     Knob volume;
-                
+
     volume.pvalue = volume.setValue(volume.pvalue, 10);
     volume.pvalue = volume.setValue(volume.pvalue, 4);
     volume.pvalue = volume.setValue(volume.pvalue, 0);
+*/
+    SpaceShip navigator;
+    Knob signal;
+    GroundControl fCenter;
+    fCenter.ship = navigator;
+    fCenter.knob = signal;
+
+    for (float orbit = 0.0f; orbit < 2000; orbit+=100.0f)
+    {
+       navigator.orbitHeight = orbit;
+       fCenter.setOrbit(navigator);
+       fCenter.adjustSignal(navigator, signal);
+    }
+
     std::cout << "good to go!" << std::endl;
 }
