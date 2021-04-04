@@ -67,6 +67,10 @@ Cat::~Cat()
         --liveNumber;
 }
 
+/*
+ copied UDT 2:
+ */
+
 struct SpaceShip
 {
     float orbitHeight{1000.f};
@@ -79,7 +83,7 @@ struct SpaceShip
     ~SpaceShip();
 
     struct CrewMember
-    {
+    {   
         int memberId{0};
         std::string name{"Rob"};
         std::string jobRole{"scientist"};
@@ -106,7 +110,7 @@ SpaceShip::SpaceShip()
 
 SpaceShip::~SpaceShip()
 {
-//    std::cout << "Spaceship deconstructed." << std::endl;
+    std::cout << "Spaceship deconstructed." << std::endl;
 }
 
 SpaceShip::CrewMember::CrewMember()
@@ -120,16 +124,17 @@ SpaceShip::CrewMember::~CrewMember()
 }
 
 /*
- copied UDT 2:
+ copied UDT 3:
  */
+
 struct Knob
 {
     float pvalue{0.0f};
     float cvalue{0.0f};
     Knob() {}
-    ~Knob()
+    ~Knob() 
     {
-//        std::cout << "Knob deconstructed" << std::endl;
+        std::cout << "Knob deconstructed" << std::endl;
     }
 
     struct Led
@@ -152,7 +157,7 @@ struct Knob
 };
 
 /*
- copied UDT 3:
+  Definitions
  */
 
 void SpaceShip::CrewMember::examineAnimal(int date, float time, Cat cat)
@@ -271,6 +276,8 @@ float Knob::setValue(float pval, float cval)
 
     float step = 1.0f / (cval + 1.0f);
 
+    std::cout << "pval: " << pval << " cval: " << cval << std::endl;
+
     if (pval < cval)
     {
         led.brightness = 0;
@@ -306,13 +313,43 @@ float Knob::setValue(float pval, float cval)
  */
 struct MarsLab
 {
-    SpaceShip explorer;
-    Cat matroskin;
-    MarsLab() {}
-    ~MarsLab() {}
- 
+    SpaceShip ship;
+    Cat cat;
+    MarsLab();
+    ~MarsLab();
+    
+    bool deliverCrew(SpaceShip);
+    void feedCat(Cat);
 
-};
+ };
+ 
+MarsLab::MarsLab()
+{
+    feedCat(cat);
+}
+
+MarsLab::~MarsLab()
+{
+    ship.takeOf(0.0f);
+}
+
+bool MarsLab::deliverCrew(SpaceShip ship1)
+{
+    SpaceShip::CrewMember doc;
+    
+    for (int i=0; i < ship1.crewNum; ++i)
+    {
+        doc.examineCrew (1, 2.0f, doc);
+    }
+    
+    return true;
+}
+
+void MarsLab::feedCat(Cat cat1)
+{
+    cat1.eat('F');
+}
+
 /*
  new UDT 5:
  with 2 member functions
@@ -322,30 +359,37 @@ struct GroundControl
 {
     SpaceShip ship;
     Knob knob;
-    GroundControl() {}
-    ~GroundControl() {}
+    GroundControl();
+    ~GroundControl();
 
     bool setOrbit(SpaceShip);
     Knob adjustSignal(SpaceShip, Knob);
 };
 
-bool GroundControl::setOrbit(SpaceShip ship)
+GroundControl::GroundControl()
 {
-    //ship.orbitHeight = orbit;
-    std::cout << ship.orbitHeight << std::endl;
+    knob.cvalue = 1.0f;
+}
+
+GroundControl::~GroundControl()
+{
+    knob.cvalue = 0.0f;
+}
+
+bool GroundControl::setOrbit(SpaceShip ship1)
+{
+    std::cout << ship1.orbitHeight << std::endl;
     return 1;
 }
 
-Knob GroundControl::adjustSignal(SpaceShip ship, Knob knob)
+Knob GroundControl::adjustSignal(SpaceShip ship1, Knob knob1)
 {
     float threshold;
-    threshold = ship.orbitHeight / 100;
     
-    std::cout << "orbit: " << ship.orbitHeight << " threshold: " << threshold << std::endl;
+    threshold = ship1.orbitHeight / 100;
+    knob1.pvalue = knob1.setValue(knob.pvalue, threshold);
 
-    knob.pvalue = knob.setValue(knob.pvalue, threshold);
-
-    return knob;
+    return knob1;
 }
 
 
@@ -366,15 +410,28 @@ Knob GroundControl::adjustSignal(SpaceShip ship, Knob knob)
 
 int main()
 {
-/*
+
     SpaceShip proton;
-    
+    Cat pusya;
     Knob volume;
 
+    pusya.mew (3);
+    
+    // dock the ship
+    std::cout << "\nShip status:" ;
+    proton.orbitHeight = 40;
+    std::cout << "\n" << ( proton.dock()  ? "free fly" : "docked" ) << std::endl;
+    
+    for (int i = 2; i < 5; ++i) 
+        proton.totalLoops += proton.makeLoop(i, 6);
+    
+    std::cout << proton.totalLoops<< std::endl;
     volume.pvalue = volume.setValue(volume.pvalue, 10);
     volume.pvalue = volume.setValue(volume.pvalue, 4);
     volume.pvalue = volume.setValue(volume.pvalue, 0);
-*/
+
+    MarsLab vesna;
+
     SpaceShip navigator;
     Knob signal;
     GroundControl fCenter;
@@ -383,10 +440,12 @@ int main()
 
     for (float orbit = 0.0f; orbit < 2000; orbit+=100.0f)
     {
-       navigator.orbitHeight = orbit;
-       fCenter.setOrbit(navigator);
-       fCenter.adjustSignal(navigator, signal);
+        navigator.orbitHeight = orbit;
+        fCenter.setOrbit(navigator);
+        signal = fCenter.adjustSignal(navigator, signal);
     }
 
     std::cout << "good to go!" << std::endl;
 }
+
+
