@@ -67,6 +67,10 @@ Cat::~Cat()
         --liveNumber;
 }
 
+/*
+ copied UDT 2:
+ */
+
 struct SpaceShip
 {
     float orbitHeight{1000.f};
@@ -120,18 +124,19 @@ SpaceShip::CrewMember::~CrewMember()
 }
 
 /*
- copied UDT 2:
+ copied UDT 3:
  */
+
 struct Knob
 {
     float pvalue{0.0f};
     float cvalue{0.0f};
     Knob() {}
-/*    ~Knob() 
+    ~Knob() 
     {
         std::cout << "Knob deconstructed" << std::endl;
     }
-*/
+
     struct Led
     {
         int num = 0;
@@ -152,7 +157,7 @@ struct Knob
 };
 
 /*
- copied UDT 3:
+  Definitions
  */
 
 void SpaceShip::CrewMember::examineAnimal(int date, float time, Cat cat)
@@ -308,20 +313,41 @@ float Knob::setValue(float pval, float cval)
  */
 struct MarsLab
 {
-    SpaceShip explorer;
-    Cat matroskin;
-    MarsLab() {}
-    ~MarsLab() {}
-
+    SpaceShip ship;
+    Cat cat;
+    MarsLab();
+    ~MarsLab();
+    
     bool deliverCrew(SpaceShip);
     void feedCat(Cat);
 
  };
-
-bool MarsLab::deliverCrew(SpaceShip)
+ 
+MarsLab::MarsLab()
 {
+    feedCat(cat);
+}
 
-    return false;
+MarsLab::~MarsLab()
+{
+    ship.takeOf(0.0f);
+}
+
+bool MarsLab::deliverCrew(SpaceShip ship1)
+{
+    SpaceShip::CrewMember doc;
+    
+    for (int i=0; i < ship1.crewNum; ++i)
+    {
+        doc.examineCrew (1, 2.0f, doc);
+    }
+    
+    return true;
+}
+
+void MarsLab::feedCat(Cat cat1)
+{
+    cat1.eat('F');
 }
 
 /*
@@ -333,12 +359,22 @@ struct GroundControl
 {
     SpaceShip ship;
     Knob knob;
-//    GroundControl() {}
-//   ~GroundControl() {}
+    GroundControl();
+    ~GroundControl();
 
     bool setOrbit(SpaceShip);
     Knob adjustSignal(SpaceShip, Knob);
 };
+
+GroundControl::GroundControl()
+{
+    knob.cvalue = 1.0f;
+}
+
+GroundControl::~GroundControl()
+{
+    knob.cvalue = 0.0f;
+}
 
 bool GroundControl::setOrbit(SpaceShip ship1)
 {
@@ -351,11 +387,7 @@ Knob GroundControl::adjustSignal(SpaceShip ship1, Knob knob1)
     float threshold;
     
     threshold = ship1.orbitHeight / 100;
-    
-    //std::cout << "orbit: " << ship.orbitHeight << " threshold: " << threshold << std::endl;
-    //std::cout << "pval: " << knob.pvalue << " cval: " << threshold << std::endl;
     knob1.pvalue = knob1.setValue(knob.pvalue, threshold);
-
 
     return knob1;
 }
@@ -378,15 +410,26 @@ Knob GroundControl::adjustSignal(SpaceShip ship1, Knob knob1)
 
 int main()
 {
-/*
+
     SpaceShip proton;
-    
+    Cat pusya;
     Knob volume;
 
+    pusya.mew (3);
+    
+    // dock the ship
+    std::cout << "\nShip status:" ;
+    proton.orbitHeight = 40;
+    std::cout << "\n" << ( proton.dock()  ? "free fly" : "docked" ) << std::endl;
+    
+    for (int i = 2; i < 5; ++i) 
+        proton.totalLoops += proton.makeLoop(i, 6);
+    
+    std::cout << proton.totalLoops<< std::endl;
     volume.pvalue = volume.setValue(volume.pvalue, 10);
     volume.pvalue = volume.setValue(volume.pvalue, 4);
     volume.pvalue = volume.setValue(volume.pvalue, 0);
-*/
+
     MarsLab vesna;
 
     SpaceShip navigator;
