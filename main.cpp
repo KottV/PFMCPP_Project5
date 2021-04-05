@@ -492,7 +492,8 @@ int main()
     
     spaceShip1.orbitHeight = 50;
     spaceShip1.shipStatus();
-/*    
+
+    Knob volume;
 
     volume.pvalue = volume.setValue(volume.pvalue, 10);
     volume.pvalue = volume.setValue(volume.pvalue, 4);
@@ -504,14 +505,13 @@ int main()
     GroundControl fCenter;
     fCenter.ship = navigator;
     fCenter.knob = signal;
-/*
     for (float orbit = 0.0f; orbit < 2000; orbit+=100.0f)
     {
         navigator.orbitHeight = orbit;
         fCenter.setOrbit(navigator);
         signal = fCenter.adjustSignal(navigator, signal);
     }
-*/
+
     std::cout << "good to go!" << std::endl;
 }
 
