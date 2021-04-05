@@ -132,29 +132,37 @@ struct Knob
     float pvalue{0.0f};
     float cvalue{0.0f};
     Knob() {}
-    ~Knob() 
-    {
-        std::cout << "Knob deconstructed" << std::endl;
-    }
+    ~Knob();
 
     struct Led
     {
         int num = 0;
         float brightness = 0.0f;
-        Led()
-        {
-//            std::cout << "Ignite the led num: " << num << " with bright: " << brightness << std::endl;
-        }
-        ~Led()
-        {
-//            std::cout << "Lights down" << std::endl;
-        }
+        Led();
+        ~Led();
+
         void set ();
     };
     
     int roundNum(float);
     float setValue(float, float);
 };
+
+Knob::~Knob() 
+{
+    std::cout << "Knob deconstructed" << std::endl;
+}
+
+Knob::Led::Led()
+{
+    std::cout << "Ignite the led num: " << num << " with bright: " << brightness << std::endl;
+}
+
+Knob::Led::~Led()
+{
+    std::cout << "Lights down" << std::endl;
+}
+
 
 /*
   Definitions
