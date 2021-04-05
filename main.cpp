@@ -70,6 +70,7 @@ namespace Example
  */
 struct Cat
 {
+    std::string name;
     int paw;
     char colour;
     bool gender; //0 female, 1 male
@@ -78,7 +79,7 @@ struct Cat
     Cat();
     ~Cat();
 
-    void eat(char foodType);
+    bool eat(char foodType);
     void sleep (float time);
     void mew (int count);
 };
@@ -109,7 +110,7 @@ struct SpaceShip
     int crewNum{3};
     int totalLoops {0};
     std::string country{"RU"};
-    std::string name{"Salyut"};
+    std::string name{"Proton"};
     SpaceShip();
     ~SpaceShip();
 
@@ -128,7 +129,8 @@ struct SpaceShip
         bool recordTest(int date, float time, int testNum=0);
         void examineCrew (int date, float time, CrewMember memberId);
     };
-
+    
+    void shipStatus();
     bool dock();
     int makeLoop(int planetNum = 3, int loopCount = 1);
     bool takeOf(float startTime);
@@ -230,6 +232,14 @@ void SpaceShip::CrewMember::examineCrew (int date, float time, CrewMember id)
     }
 }
 
+void SpaceShip::shipStatus()
+{
+    std::cout << "\nShip status:\n";
+    std::cout << "name: " << this->name << std::endl;
+    std::cout << "\n" << ( this->dock()  ? "free fly" : "docked" ) << std::endl;
+    std::cout << this->totalLoops << std::endl;
+}
+
 bool SpaceShip::dock()
 {
     //SpaceShip Rassvet;
@@ -253,7 +263,7 @@ int SpaceShip::makeLoop(int planetNum, int loopCount)
         }
 
     }
-    //this->totalLoops += loop;
+//    this->totalLoops += loop;
     return loop;
 }
 
@@ -264,11 +274,18 @@ bool SpaceShip::takeOf(float startTime)
     return (orbitHeight != 0.0f);
 }
 
-void Cat::eat(char foodType)
+bool Cat::eat(char foodType)
 {
     if (foodType == 'F')
     {
-        mew(3);
+        std::cout << this->name << " thanking you" << std::endl;
+        this->mew(3);
+        return true;
+    }
+    else
+    {
+        std::cout << this->name << " won't eat that" << std::endl;
+        return false;
     }
 }
 
@@ -280,8 +297,9 @@ void Cat::sleep (float time)
 void Cat::mew (int count)
 {
 //    --count;
+    std::cout << this->name << " says:" << std::endl;
     for (int i=1; i <= count; ++i)
-        std::cout << "mew" << i << std::endl;
+        std::cout << "mew" << std::endl;
 }
 
 int Knob::roundNum(float num)
@@ -450,33 +468,43 @@ Knob GroundControl::adjustSignal(SpaceShip ship1, Knob knob1)
 int main()
 {
 
-    SpaceShip proton;
-    Cat pusya;
-    Knob volume;
-
-    pusya.mew (3);
+    SpaceShip spaceShip1;
+    spaceShip1.orbitHeight = 40;
+    
+    Cat cat1;
+    cat1.name = "Pusya";
+    cat1.eat ('F');
+    
+    Cat cat2;
+    cat2.name = "Matroskin";
+    cat2.eat ('C');
+    
+   
+    for (int i = 2; i < 5; ++i) 
+    spaceShip1.totalLoops += spaceShip1.makeLoop(i, 6);
     
     // dock the ship
-    std::cout << "\nShip status:" ;
-    proton.orbitHeight = 40;
-    std::cout << "\n" << ( proton.dock()  ? "free fly" : "docked" ) << std::endl;
+    std::cout << "\nShip status:\n" ;
+    std::cout << "name: " << spaceShip1.name << std::endl;
+    std::cout << "\n" << ( spaceShip1.dock()  ? "free fly" : "docked" ) << std::endl;
     
-    for (int i = 2; i < 5; ++i) 
-        proton.totalLoops += proton.makeLoop(i, 6);
+    std::cout << spaceShip1.totalLoops<< std::endl;
     
-    std::cout << proton.totalLoops<< std::endl;
+    spaceShip1.orbitHeight = 50;
+    spaceShip1.shipStatus();
+
+    Knob volume;
+
     volume.pvalue = volume.setValue(volume.pvalue, 10);
     volume.pvalue = volume.setValue(volume.pvalue, 4);
     volume.pvalue = volume.setValue(volume.pvalue, 0);
 
     MarsLab vesna;
-
     SpaceShip navigator;
     Knob signal;
     GroundControl fCenter;
     fCenter.ship = navigator;
     fCenter.knob = signal;
-
     for (float orbit = 0.0f; orbit < 2000; orbit+=100.0f)
     {
         navigator.orbitHeight = orbit;
