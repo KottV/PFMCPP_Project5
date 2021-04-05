@@ -263,7 +263,7 @@ int SpaceShip::makeLoop(int planetNum, int loopCount)
         }
 
     }
-    this->totalLoops += loop;
+//    this->totalLoops += loop;
     return loop;
 }
 
