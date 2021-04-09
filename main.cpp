@@ -445,6 +445,7 @@ void MarsLab::feedCat(Cat cat1)
 struct GroundControl
 {
     SpaceShip ship;
+ //   SpaceShipWrapper shipWrapper;
     Knob knob;
     GroundControl();
     ~GroundControl();
@@ -556,18 +557,16 @@ int main()
     volumeWrapper.ptrKnob->pvalue = volumeWrapper.ptrKnob->setValue(volumeWrapper.ptrKnob->pvalue, 0);
 
     MarsLabWrapper vesnaWrapper (new MarsLab());
-//    SpaceShipWrapper navigatorWrapper (new SpaceShip());
-//    KnobWrapper signalWrapper (new Knob());
-    SpaceShip navigator;
-    Knob signal;
+    SpaceShipWrapper navigatorWrapper (new SpaceShip());
+    KnobWrapper signalWrapper (new Knob());
     GroundControlWrapper fCenterWrapper (new GroundControl());
-    fCenterWrapper.ptrGroundControl->ship = navigator;
-    fCenterWrapper.ptrGroundControl->knob = signal;
+    fCenterWrapper.ptrGroundControl->ship = *navigatorWrapper.ptrSpaceShip;
+    fCenterWrapper.ptrGroundControl->knob = *signalWrapper.ptrKnob;
     for (float orbit = 0.0f; orbit < 2000; orbit+=100.0f)
     {
-        navigator.orbitHeight = orbit;
-        fCenterWrapper.ptrGroundControl->setOrbit(navigator);
-        signal = fCenterWrapper.ptrGroundControl->adjustSignal(navigator, signal);
+        navigatorWrapper.ptrSpaceShip->orbitHeight = orbit;
+        fCenterWrapper.ptrGroundControl->setOrbit(*navigatorWrapper.ptrSpaceShip);
+        *signalWrapper.ptrKnob = fCenterWrapper.ptrGroundControl->adjustSignal(*navigatorWrapper.ptrSpaceShip, *signalWrapper.ptrKnob);
     }
 
     std::cout << "good to go!" << std::endl;
