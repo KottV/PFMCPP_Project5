@@ -50,6 +50,7 @@ You don't have to do this, you can keep your current object name and just change
 
 
 #include <iostream>
+#include "LeakedObjectDetector.h"
 
 /*
  copied UDT 1:
@@ -68,6 +69,8 @@ struct Cat
     bool eat(char foodType);
     void sleep (float time);
     void mew (int count);
+
+    JUCE_LEAK_DETECTOR(Cat)
 };
 
 Cat::Cat()
@@ -120,6 +123,8 @@ struct SpaceShip
     bool dock();
     int makeLoop(int planetNum = 3, int loopCount = 1);
     bool takeOf(float startTime);
+
+    JUCE_LEAK_DETECTOR(SpaceShip)
 };
 
 SpaceShip::SpaceShip()
@@ -165,6 +170,8 @@ struct Knob
     
     int roundNum(float);
     float setValue(float, float);
+
+    JUCE_LEAK_DETECTOR(Knob)
 };
 
 Knob::~Knob() 
@@ -182,6 +189,42 @@ Knob::Led::~Led()
     std::cout << "Lights down" << std::endl;
 }
 
+/*
+  Wrappers
+*/
+
+struct CatWrapper
+{
+    Cat* ptrCat = nullptr;
+
+    CatWrapper(Cat* ptr) : ptrCat(ptr) {}
+    ~CatWrapper()
+    {
+        delete ptrCat;
+    }
+};
+
+struct SpaceShipWrapper
+{
+    SpaceShip* ptrSpaceShip = nullptr;
+
+    SpaceShipWrapper(SpaceShip* ptr) : ptrSpaceShip(ptr) {}
+    ~SpaceShipWrapper()
+    {
+        delete ptrSpaceShip;
+    }
+};
+
+struct KnobWrapper
+{
+    Knob* ptrKnob = nullptr;
+
+    KnobWrapper(Knob* ptr) : ptrKnob(ptr) {}
+    ~KnobWrapper()
+    {
+        delete ptrKnob;
+    }
+};
 
 /*
   Definitions
@@ -364,6 +407,7 @@ struct MarsLab
     bool deliverCrew(SpaceShip);
     void feedCat(Cat);
 
+    JUCE_LEAK_DETECTOR(MarsLab)
  };
  
 MarsLab::MarsLab()
@@ -401,12 +445,39 @@ void MarsLab::feedCat(Cat cat1)
 struct GroundControl
 {
     SpaceShip ship;
+ //   SpaceShipWrapper shipWrapper;
     Knob knob;
     GroundControl();
     ~GroundControl();
 
     bool setOrbit(SpaceShip);
     Knob adjustSignal(SpaceShip, Knob);
+
+    JUCE_LEAK_DETECTOR(GroundControl)
+};
+
+/*Wrappers*/
+
+struct MarsLabWrapper
+{
+    MarsLab* ptrMarsLab = nullptr;
+
+    MarsLabWrapper(MarsLab* ptr) : ptrMarsLab(ptr) {}
+    ~MarsLabWrapper()
+    {
+        delete ptrMarsLab;
+    }
+};
+
+struct GroundControlWrapper
+{
+    GroundControl* ptrGroundControl = nullptr;
+
+    GroundControlWrapper(GroundControl* ptr) : ptrGroundControl(ptr) {}
+    ~GroundControlWrapper()
+    {
+        delete ptrGroundControl;
+    }
 };
 
 GroundControl::GroundControl()
@@ -418,6 +489,8 @@ GroundControl::~GroundControl()
 {
     knob.cvalue = 0.0f;
 }
+
+/*Definitions*/
 
 bool GroundControl::setOrbit(SpaceShip ship1)
 {
@@ -450,52 +523,50 @@ Knob GroundControl::adjustSignal(SpaceShip ship1, Knob knob1)
  Wait for my code review.
  */
 
-
 int main()
 {
-
-    SpaceShip spaceShip1;
-    spaceShip1.orbitHeight = 40;
+    SpaceShipWrapper spaceShip1Wrapper (new SpaceShip());
+    spaceShip1Wrapper.ptrSpaceShip->orbitHeight = 40;
     
-    Cat cat1;
-    cat1.name = "Pusya";
-    cat1.eat ('F');
+    CatWrapper cat1Wrapper(new Cat());
+    cat1Wrapper.ptrCat->name = "Pusya";
+    cat1Wrapper.ptrCat->eat ('F');
     
-    Cat cat2;
-    cat2.name = "Matroskin";
-    cat2.eat ('C');
+    CatWrapper cat2Wrapper(new Cat());
+    cat2Wrapper.ptrCat->name = "Matroskin";
+    cat2Wrapper.ptrCat->eat ('C');
     
    
     for (int i = 2; i < 5; ++i) 
-    spaceShip1.totalLoops += spaceShip1.makeLoop(i, 6);
+    spaceShip1Wrapper.ptrSpaceShip->totalLoops += spaceShip1Wrapper.ptrSpaceShip->makeLoop(i, 6);
     
     // dock the ship
     std::cout << "\nShip status:\n" ;
-    std::cout << "name: " << spaceShip1.name << std::endl;
-    std::cout << "\n" << ( spaceShip1.dock()  ? "free fly" : "docked" ) << std::endl;
+    std::cout << "name: " << spaceShip1Wrapper.ptrSpaceShip->name << std::endl;
+    std::cout << "\n" << (spaceShip1Wrapper.ptrSpaceShip->dock()  ? "free fly" : "docked" ) << std::endl;
     
-    std::cout << spaceShip1.totalLoops<< std::endl;
+    std::cout << spaceShip1Wrapper.ptrSpaceShip->totalLoops<< std::endl;
     
-    spaceShip1.orbitHeight = 50;
-    spaceShip1.shipStatus();
+    spaceShip1Wrapper.ptrSpaceShip->orbitHeight = 50;
+    spaceShip1Wrapper.ptrSpaceShip->shipStatus();
 
-    Knob volume;
+    KnobWrapper volumeWrapper (new Knob());
 
-    volume.pvalue = volume.setValue(volume.pvalue, 10);
-    volume.pvalue = volume.setValue(volume.pvalue, 4);
-    volume.pvalue = volume.setValue(volume.pvalue, 0);
+    volumeWrapper.ptrKnob->pvalue = volumeWrapper.ptrKnob->setValue(volumeWrapper.ptrKnob->pvalue, 10);
+    volumeWrapper.ptrKnob->pvalue = volumeWrapper.ptrKnob->setValue(volumeWrapper.ptrKnob->pvalue, 4);
+    volumeWrapper.ptrKnob->pvalue = volumeWrapper.ptrKnob->setValue(volumeWrapper.ptrKnob->pvalue, 0);
 
-    MarsLab vesna;
-    SpaceShip navigator;
-    Knob signal;
-    GroundControl fCenter;
-    fCenter.ship = navigator;
-    fCenter.knob = signal;
+    MarsLabWrapper vesnaWrapper (new MarsLab());
+    SpaceShipWrapper navigatorWrapper (new SpaceShip());
+    KnobWrapper signalWrapper (new Knob());
+    GroundControlWrapper fCenterWrapper (new GroundControl());
+    fCenterWrapper.ptrGroundControl->ship = *navigatorWrapper.ptrSpaceShip;
+    fCenterWrapper.ptrGroundControl->knob = *signalWrapper.ptrKnob;
     for (float orbit = 0.0f; orbit < 2000; orbit+=100.0f)
     {
-        navigator.orbitHeight = orbit;
-        fCenter.setOrbit(navigator);
-        signal = fCenter.adjustSignal(navigator, signal);
+        navigatorWrapper.ptrSpaceShip->orbitHeight = orbit;
+        fCenterWrapper.ptrGroundControl->setOrbit(*navigatorWrapper.ptrSpaceShip);
+        *signalWrapper.ptrKnob = fCenterWrapper.ptrGroundControl->adjustSignal(*navigatorWrapper.ptrSpaceShip, *signalWrapper.ptrKnob);
     }
 
     std::cout << "good to go!" << std::endl;
