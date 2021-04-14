@@ -30,7 +30,6 @@
          just split it up into source files and provide the appropriate #include directives.
  */
 
-#pragma once
 #include <iostream>
 #include "Cat.h"
 #include "SpaceShip.h"

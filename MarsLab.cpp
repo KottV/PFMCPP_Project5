@@ -1,5 +1,4 @@
 /*Definitions*/
-#pragma once
 #include <iostream>
 #include "LeakedObjectDetector.h"
 #include "MarsLab.h"

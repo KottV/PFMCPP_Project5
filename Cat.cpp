@@ -1,7 +1,6 @@
 /*
   Definitions
  */
-#pragma once
 #include <iostream>
 #include "Cat.h"
 
