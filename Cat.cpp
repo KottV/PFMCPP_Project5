@@ -1,10 +1,9 @@
 /*
   Definitions
  */
+
 #include <iostream>
 #include "Cat.h"
-
-
 
 bool Cat::eat(char foodType)
 {

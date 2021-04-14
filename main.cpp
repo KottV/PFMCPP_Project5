@@ -29,12 +29,11 @@
  Remember, your Chapter 3 Part 4 task worked when it was all in one file. so you shouldn't need to edit any of it.  
          just split it up into source files and provide the appropriate #include directives.
  */
-//#pragma once
 
+#pragma once
 #include <iostream>
 #include "Wrappers.h"
 #include "Cat.h"
-
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
 

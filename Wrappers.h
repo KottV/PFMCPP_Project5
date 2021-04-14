@@ -1,14 +1,14 @@
 /*
   Wrappers
 */
-#include "Cat.h"
+
 /*
 #include "GroundControl.h"
 #include "Knob.h"
 #include "MarsLab.h"
 #include "SpaceShip.h"
 */
-
+struct Cat;
 struct CatWrapper
 {
     Cat* ptrCat = nullptr;
