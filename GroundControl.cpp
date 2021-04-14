@@ -2,10 +2,6 @@
 #include <iostream>
 #include "GroundControl.h"
 
-struct GroundControl;
-struct SpaceShip;
-struct Knob;
-
 GroundControl::GroundControl()
 {
     knob.cvalue = 1.0f;
