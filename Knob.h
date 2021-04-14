@@ -1,8 +1,8 @@
 /*
  copied UDT 3:
  */
+#pragma once
 #include "LeakedObjectDetector.h"
-#include "Atomic.h"
 
 struct Knob
 {

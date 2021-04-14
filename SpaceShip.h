@@ -1,9 +1,9 @@
 /*
  copied UDT 2:
  */
+#pragma once
 #include "LeakedObjectDetector.h"
-
-struct Cat;
+#include "Cat.h"
 
 struct SpaceShip
 {

@@ -4,9 +4,8 @@
  */
 #pragma once
 #include "LeakedObjectDetector.h"
-
-struct SpaceShip;
-struct Cat;
+#include "SpaceShip.h"
+#include "Cat.h"
 
 struct MarsLab
 {

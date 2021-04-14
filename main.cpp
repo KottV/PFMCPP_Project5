@@ -34,6 +34,9 @@
 #include <iostream>
 #include "Cat.h"
 #include "SpaceShip.h"
+#include "Knob.h"
+#include "GroundControl.h"
+#include "MarsLab.h"
 #include "Wrappers.h"
 
 /*
@@ -76,7 +79,7 @@ int main()
     
     spaceShip1Wrapper.ptrSpaceShip->orbitHeight = 50;
     spaceShip1Wrapper.ptrSpaceShip->shipStatus();
-    /*
+    
     KnobWrapper volumeWrapper (new Knob());
 
     volumeWrapper.ptrKnob->pvalue = volumeWrapper.ptrKnob->setValue(volumeWrapper.ptrKnob->pvalue, 10);
@@ -95,7 +98,7 @@ int main()
         fCenterWrapper.ptrGroundControl->setOrbit(*navigatorWrapper.ptrSpaceShip);
         *signalWrapper.ptrKnob = fCenterWrapper.ptrGroundControl->adjustSignal(*navigatorWrapper.ptrSpaceShip, *signalWrapper.ptrKnob);
     }
-    */
+    
     std::cout << "good to go!" << std::endl;
 }
 

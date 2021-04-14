@@ -3,8 +3,6 @@
 #include <iostream>
 #include "LeakedObjectDetector.h"
 #include "MarsLab.h"
-#include "SpaceShip.h"
-#include "Cat.h"
 
 MarsLab::MarsLab()
 {

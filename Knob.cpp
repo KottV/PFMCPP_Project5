@@ -1,10 +1,9 @@
 /*
   Definitions
  */
+#pragma once
 #include <iostream>
 #include "Knob.h"
-
-struct Knob;
 
 Knob::~Knob()
 {

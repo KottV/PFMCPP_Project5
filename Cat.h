@@ -1,6 +1,7 @@
 /*
  copied UDT 1:
  */
+#pragma once
 #include "LeakedObjectDetector.h"
 
 struct Cat

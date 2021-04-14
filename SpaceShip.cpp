@@ -5,8 +5,6 @@
 #include <iostream>
 #include "LeakedObjectDetector.h"
 #include "SpaceShip.h"
-#include "Cat.h"
-
 
 SpaceShip::SpaceShip()
 {

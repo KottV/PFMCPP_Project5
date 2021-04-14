@@ -2,8 +2,8 @@
 new UDT 5:
 with 2 member functions
 */
+#pragma once
 #include "LeakedObjectDetector.h"
-#include "Atomic.h"
 #include "SpaceShip.h"
 #include "Knob.h"
 
