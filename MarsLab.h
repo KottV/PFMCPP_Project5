@@ -2,10 +2,11 @@
  new UDT 4:
  with 2 member functions
  */
+#pragma once
 #include "LeakedObjectDetector.h"
-#include "Atomic.h"
-#include "SpaceShip.h"
-#include "Cat.h"
+
+struct SpaceShip;
+struct Cat;
 
 struct MarsLab
 {

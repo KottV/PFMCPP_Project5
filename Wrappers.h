@@ -3,12 +3,16 @@
 */
 
 /*
-#include "GroundControl.h"
-#include "Knob.h"
-#include "MarsLab.h"
-#include "SpaceShip.h"
+
 */
+#pragma once
+
 struct Cat;
+struct GroundControl;
+struct Knob;
+struct MarsLab;
+struct SpaceShip;
+
 struct CatWrapper
 {
     Cat* ptrCat = nullptr;
@@ -19,7 +23,7 @@ struct CatWrapper
         delete ptrCat;
     }
 };
-/*
+
 struct SpaceShipWrapper
 {
     SpaceShip* ptrSpaceShip = nullptr;
@@ -63,4 +67,3 @@ struct GroundControlWrapper
         delete ptrGroundControl;
     }
 };
-*/

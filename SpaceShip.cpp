@@ -1,11 +1,12 @@
 /*
   Definitions
  */
+#pragma once
 #include <iostream>
 #include "LeakedObjectDetector.h"
 #include "SpaceShip.h"
+#include "Cat.h"
 
-struct SpaceShip;
 
 SpaceShip::SpaceShip()
 {

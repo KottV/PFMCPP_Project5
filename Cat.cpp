@@ -1,9 +1,24 @@
 /*
   Definitions
  */
-
+#pragma once
 #include <iostream>
 #include "Cat.h"
+
+Cat::Cat()
+{
+    paw = 4;
+    colour = 'B';
+    gender = 0; //0 female, 1 male
+    age = 3.5f;
+    liveNumber = 9;
+}
+
+Cat::~Cat()
+{
+    if (liveNumber > 0)
+        --liveNumber;
+}
 
 bool Cat::eat(char foodType)
 {

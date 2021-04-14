@@ -2,7 +2,8 @@
  copied UDT 2:
  */
 #include "LeakedObjectDetector.h"
-#include "Atomic.h"
+
+struct Cat;
 
 struct SpaceShip
 {

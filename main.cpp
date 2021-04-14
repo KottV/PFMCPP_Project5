@@ -32,8 +32,10 @@
 
 #pragma once
 #include <iostream>
-#include "Wrappers.h"
 #include "Cat.h"
+#include "SpaceShip.h"
+#include "Wrappers.h"
+
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
 
@@ -50,8 +52,8 @@
 
 int main()
 {
-    //SpaceShipWrapper spaceShip1Wrapper (new SpaceShip());
-    //spaceShip1Wrapper.ptrSpaceShip->orbitHeight = 40;
+    SpaceShipWrapper spaceShip1Wrapper (new SpaceShip());
+    spaceShip1Wrapper.ptrSpaceShip->orbitHeight = 40;
     
     CatWrapper cat1Wrapper(new Cat());
     cat1Wrapper.ptrCat->name = "Pusya";
@@ -61,7 +63,7 @@ int main()
     cat2Wrapper.ptrCat->name = "Matroskin";
     cat2Wrapper.ptrCat->eat ('C');
     
-   /*
+   
     for (int i = 2; i < 5; ++i) 
     spaceShip1Wrapper.ptrSpaceShip->totalLoops += spaceShip1Wrapper.ptrSpaceShip->makeLoop(i, 6);
     
@@ -74,7 +76,7 @@ int main()
     
     spaceShip1Wrapper.ptrSpaceShip->orbitHeight = 50;
     spaceShip1Wrapper.ptrSpaceShip->shipStatus();
-
+    /*
     KnobWrapper volumeWrapper (new Knob());
 
     volumeWrapper.ptrKnob->pvalue = volumeWrapper.ptrKnob->setValue(volumeWrapper.ptrKnob->pvalue, 10);

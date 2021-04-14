@@ -1,12 +1,10 @@
 /*Definitions*/
+#pragma once
 #include <iostream>
 #include "LeakedObjectDetector.h"
-#include "Atomic.h""
 #include "MarsLab.h"
-
-struct MarsLab;
-struct SpaceShip;
-struct Cat;
+#include "SpaceShip.h"
+#include "Cat.h"
 
 MarsLab::MarsLab()
 {
