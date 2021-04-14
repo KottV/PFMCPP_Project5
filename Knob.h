@@ -8,7 +8,7 @@ struct Knob
 {
     float pvalue{ 0.0f };
     float cvalue{ 0.0f };
-    Knob() {} FIXME: see #5 in main.cpp
+    Knob();
     ~Knob();
 
     struct Led
