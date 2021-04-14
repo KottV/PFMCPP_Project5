@@ -20,6 +20,21 @@ Knob::Led::~Led()
     std::cout << "Lights down" << std::endl;
 }
 
+int Knob::roundNum(float num)
+{
+    int n = 0;
+
+    for (float i = 0.0f; i <= 20.0f; i += 0.5f)
+    {
+        if (i >= num)
+            return n / 2;
+
+        ++n;
+    }
+
+    return 0;
+}
+
 void Knob::Led::set()
 {
     std::cout << num << " " << brightness << std::endl;
