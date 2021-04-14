@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Knob.h"
 
+Knob::Knob() {}
 Knob::~Knob()
 {
     std::cout << "Knob deconstructed" << std::endl;
