@@ -67,11 +67,7 @@ void SpaceShip::shipStatus()
 bool SpaceShip::dock()
 {
     //SpaceShip Rassvet;
-    if (orbitHeight != 40.0f)
-    {
-        return true;
-    }
-    return false;
+    return (orbitHeight != 40.0f);
 }
 
 int SpaceShip::makeLoop(int planetNum, int loopCount)
@@ -83,7 +79,7 @@ int SpaceShip::makeLoop(int planetNum, int loopCount)
         if (loop == planetNum)
         {
             std::cout << "Planet " << planetNum << " Say bye!" << std::endl;
-            return loop;
+            break;
         }
 
     }

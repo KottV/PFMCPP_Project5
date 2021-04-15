@@ -27,11 +27,8 @@ bool Cat::eat(char foodType)
         this->mew(3);
         return true;
     }
-    else
-    {
-        std::cout << this->name << " won't eat that" << std::endl;
-        return false;
-    }
+    std::cout << this->name << " won't eat that" << std::endl;
+    return false;
 }
 
 void Cat::sleep(float time)

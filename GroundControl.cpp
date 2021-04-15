@@ -15,7 +15,7 @@ GroundControl::~GroundControl()
 bool GroundControl::setOrbit(SpaceShip ship1)
 {
     std::cout << ship1.orbitHeight << std::endl;
-    return 1;
+    return true;
 }
 
 Knob GroundControl::adjustSignal(SpaceShip ship1, Knob knob1)

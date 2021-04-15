@@ -27,5 +27,6 @@ bool MarsLab::deliverCrew(SpaceShip ship1)
 
 void MarsLab::feedCat(Cat cat1)
 {
+    cat1.name = "Jones";
     cat1.eat('F');
 }
