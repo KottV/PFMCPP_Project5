@@ -1,10 +1,6 @@
 /*
   Wrappers
 */
-
-/*
-
-*/
 #pragma once
 
 struct Cat;
